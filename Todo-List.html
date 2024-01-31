@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50vh;
+        }
+
+        #todo-container {
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            width: 500px;
+        }
+
+        #todo-header {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        #todo-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .todo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .todo-item:last-child {
+            border-bottom: none;
+        }
+
+        #add-task {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: none;
+            border-top: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
+        #add-task:focus {
+            outline: none;
+        }
+
+        #add-button, #edit-button {
+            width: 49%;
+            background-color: green;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+        button {
+    background-color: orange;
+    color: white;
+    border: none;
+    border-radius: 20px;
+}
+
+        #edit-button {
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+    <div id="todo-container">
+        <div id="todo-header">To-Do List</div>
+        <ul id="todo-list">
+            <!-- Tasks will be added here dynamically -->
+        </ul>
+        <input type="text" id="add-task" placeholder="Add a new task...">
+        <button id="add-button" onclick="addTask()">Add Task</button>
+       
+    </div>
+
+    <script>
+        function addTask() {
+            var taskInput = document.getElementById("add-task");
+            var taskText = taskInput.value.trim();
+
+            if (taskText !== "") {
+                var todoList = document.getElementById("todo-list");
+                var listItem = document.createElement("li");
+                listItem.className = "todo-item";
+                listItem.innerHTML = `
+                    <span>${taskText}</span>
+                    <button onclick="editTask(this)">Edit</button>
+                    <button onclick="removeTask(this)">Remove</button>
+                `;
+                todoList.appendChild(listItem);
+                taskInput.value = "";
+            }
+        }
+
+        function editTask(button) {
+            var listItem = button.parentElement;
+            var taskText = listItem.querySelector('span').innerText;
+            var editedText = prompt("Edit task:", taskText);
+
+            if (editedText !== null) {
+                listItem.querySelector('span').innerText = editedText;
+            }
+        }
+
+        function removeTask(button) {
+            var listItem = button.parentElement;
+            listItem.remove();
+        }
+    </script>
+</body>
+</html>
